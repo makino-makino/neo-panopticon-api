@@ -140,6 +140,7 @@ DEPENDENCIES
   rails (~> 5.2.3)
   spring
   spring-watcher-listen (~> 2.0.0)
+  sprockets (~> 3.7, >= 3.7.2)
   tzinfo-data
 
 RUBY VERSION
