@@ -1,5 +1,13 @@
 module Auth
 	class Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
+		before_action :skip_session
+		protected
+		def skip_session
+			request.session_options[:skip] = true
+		end
+
+
+
 		private
 		def sign_up_params
 			params.require(:name)
