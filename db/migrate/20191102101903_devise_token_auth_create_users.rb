@@ -37,6 +37,13 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.2]
       ## Tokens
       t.text :tokens
 
+      t.datetime :current_sign_in_at
+      t.datetime :current_sign_in_ip
+      t.datetime :last_sign_in_at
+      t.datetime :last_sign_in_ip
+      t.integer  :sign_in_count, default: 0, null: false
+
+
       t.timestamps
     end
 
