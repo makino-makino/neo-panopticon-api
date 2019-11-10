@@ -11,6 +11,9 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @score = {
+      "evaluation": PostEvaluation.where(post: @post).average(:score)
+    }
   end
 
   # POST /posts
@@ -18,10 +21,6 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user = current_user
-    
-    # @post = Post.find_by(params['id'])
-    # @evaluation = PostEvaluation.where(post: @post).average()
-    # print @evaluation
 
     if @post.save
       render :show, status: :created, location: @post
