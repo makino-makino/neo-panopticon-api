@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, only: [:show, :update, :destroy]
+  before_action :set_post, only: [:eval, :show, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
@@ -18,12 +18,34 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user = current_user
+    
+    # @post = Post.find_by(params['id'])
+    # @evaluation = PostEvaluation.where(post: @post).average()
+    # print @evaluation
 
     if @post.save
       render :show, status: :created, location: @post
     else
       render json: @post.errors, status: :unprocessable_entity
     end
+  end
+
+  def eval
+    params.require(:score)
+    params.permit(:score)
+    score = params[:score]
+
+    # TODO: Validation
+
+    @post = Post.find_by(params['id'])
+    @evaluation = PostEvaluation.new(post: @post, user:current_user, score: score)
+
+    if @evaluation.save
+      render :eval
+    else
+      render json: @evaluation.errors, status: :unprocessable_entity
+    end
+
   end
 
   # PATCH/PUT /posts/1
