@@ -1,4 +1,5 @@
 class FollowingsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_following, only: [:show, :update, :destroy]
 
   # GET /followings
@@ -10,12 +11,14 @@ class FollowingsController < ApplicationController
   # GET /followings/1
   # GET /followings/1.json
   def show
+
   end
 
   # POST /followings
   # POST /followings.json
   def create
     @following = Following.new(following_params)
+    @following.from = current_user
 
     if @following.save
       render :show, status: :created, location: @following
@@ -43,11 +46,12 @@ class FollowingsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_following
-      @following = Following.find(params[:id])
+      @following = Following.find_by(to:params[:to], from: current_user)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def following_params
-      params.require(:following).permit(:user_id, :user_id)
+      params.require(:to_id)
+      params.permit(:to_id)
     end
 end

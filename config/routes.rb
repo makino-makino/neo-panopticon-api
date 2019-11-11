@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  resources :users do
-    resources :followings
-  end
+  resources :users 
+  resources :followings
   
   resources :posts do
     member do
