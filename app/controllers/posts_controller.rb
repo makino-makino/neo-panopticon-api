@@ -5,25 +5,13 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    #@resp = []
-	
     @posts = Post.all
-    #posts
-
-    #for index in 1..Post.all.size do
-    #   resp.push({
-    #      ''
-    #   })
-    #end
-    
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @score = {
-      "evaluation": PostEvaluation.where(post: @post).average(:score)
-    }
+    @score = PostEvaluation.score(@post)
   end
 
   # POST /posts

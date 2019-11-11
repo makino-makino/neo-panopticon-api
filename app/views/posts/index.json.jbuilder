@@ -4,5 +4,6 @@ json.array! @posts do |post|
     json.content post.content
     json.created_at post.created_at
     json.updated_at post.updated_at
-    json.evaluation PostEvaluation.where(post: post).average(:score)
+
+    json.evaluation PostEvaluation.score(post)
 end
