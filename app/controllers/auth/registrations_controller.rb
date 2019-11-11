@@ -12,10 +12,12 @@ module Auth
 		def sign_up_params
 			params.require(:name)
 			params.require(:phone)
-			params.permit(:name, :phone, :email, :password, :password_confirmation)
+			params.require(:password)
+			params.require(:email)
+			params.permit(:name, :phone, :email, :password, :password_confirmation, :bio)
 		end
 		def account_update_params
-			params.permit(:name, :email, :phone, :image)
+			params.permit(:name, :email, :phone, :image, :bio)
 		end
 	end
 end

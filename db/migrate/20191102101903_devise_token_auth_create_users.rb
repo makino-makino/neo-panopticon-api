@@ -30,6 +30,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.2]
 
       ## User Info
       t.string :name
+      t.string :bio
       t.string :phone
       t.string :email
       t.string :image
@@ -42,7 +43,6 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.2]
       t.datetime :last_sign_in_at
       t.datetime :last_sign_in_ip
       t.integer  :sign_in_count, default: 0, null: false
-
 
       t.timestamps
     end

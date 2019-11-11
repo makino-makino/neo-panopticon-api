@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :followings
+  resources :users do
+    resources :followings
+  end
+  
   resources :posts do
     member do
       post 'eval'
