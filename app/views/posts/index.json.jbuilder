@@ -5,5 +5,5 @@ json.array! @posts do |post|
     json.created_at post.created_at
     json.updated_at post.updated_at
 
-    json.evaluation PostEvaluation.score(post)
+    json.evaluation PostEvaluation.eval_post(post)
 end
