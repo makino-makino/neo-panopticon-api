@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :followings
   resources :posts do
     member do
       post 'eval'
