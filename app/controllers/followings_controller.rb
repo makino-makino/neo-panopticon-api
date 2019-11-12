@@ -20,6 +20,8 @@ class FollowingsController < ApplicationController
     @following = Following.new(following_params)
     @following.from = current_user
 
+    return false if Following.all.where('from_id = ? and to_id = ?', user.id, user2.id).count > 0
+
     if @following.save
       render :show, status: :created, location: @following
     else
