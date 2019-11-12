@@ -35,6 +35,7 @@ class PostsController < ApplicationController
     # TODO: Validation
 
     @post = Post.find_by(params['id'])
+    if PostEvaluation.find(@post.id) return false end
     @evaluation = PostEvaluation.new(post: @post, user:current_user, score: score)
 
     if @evaluation.save

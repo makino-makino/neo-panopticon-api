@@ -52,16 +52,10 @@ ActiveRecord::Schema.define(version: 2019_11_11_003030) do
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
     t.string "name", null: false
-    t.string "bio"
     t.string "phone", null: false
     t.string "email", null: false
     t.string "image"
     t.text "tokens"
-    t.datetime "current_sign_in_at"
-    t.datetime "current_sign_in_ip"
-    t.datetime "last_sign_in_at"
-    t.datetime "last_sign_in_ip"
-    t.integer "sign_in_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
