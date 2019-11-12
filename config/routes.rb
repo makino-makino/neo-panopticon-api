@@ -12,5 +12,5 @@ Rails.application.routes.draw do
     registrations: 'auth/registrations'
   }
 
-  get 'user/:id', to: 'users##show'
+  get 'user/:id', to: 'users#show'
 end
