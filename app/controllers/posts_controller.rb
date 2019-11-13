@@ -1,11 +1,42 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :set_post, only: [:eval, :show, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    params.require(:type)
+    params.permit(:type, :numbers, :start_created, :start_id)
+
+    # set values
+    if params[:type] == "global"
+      users = User.all
+    elsif params[:type] == "local"
+      users = User.where(id: Following.where(from: current_user.id))
+    end
+
+    if not params[:numbers].nil?
+      numbers = params[:numbers].to_i
+    else
+      numbers = 20
+    end
+
+    if not params[:start_created].nil?
+      start_created = params[:start_created]
+    else
+      start_created = 0
+    end
+
+    if not params[:start_id].nil?
+      start_id = params[:start_id]
+    else
+      start_id = 0
+    end
+
+    @posts = Post.where('id > ? and created_at > ?', start_id, start_created)
+                 .where(id: users)
+                 .first(numbers)
+
   end
 
   # GET /posts/1
@@ -33,6 +64,7 @@ class PostsController < ApplicationController
     score = params[:score]
 
     # TODO: Validation
+    # -> done
 
     @post = Post.find_by(params['id'])
 
