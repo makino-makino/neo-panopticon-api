@@ -5,7 +5,6 @@ class FollowingsController < ApplicationController
   # GET /followings
   # GET /followings.json
   def index
-    params.permit(:numbers, :followee, :follower)
 
     # check if params is nil
     if not params[:followee].nil?

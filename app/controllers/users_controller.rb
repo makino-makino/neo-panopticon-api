@@ -6,6 +6,15 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+
+    if not params[:followee].nil?
+      @users = @users.find_by(name: params[:followee])
+    end
+
+    if not params[:follower].nil?
+      @users = @users.find_by(name: params[:follower])
+    end
+
   end
 
   # GET /users/1
