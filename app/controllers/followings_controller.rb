@@ -5,28 +5,59 @@ class FollowingsController < ApplicationController
   # GET /followings
   # GET /followings.json
   def index
-    @followings = Following.all
+    params.permit(:numbers, :followee, :follower)
+
+    # check if params is nil
+    if not params[:followee].nil?
+      followee = User.find_by(name: params[:followee])
+    else
+      followee = User.all
+    end
+
+    if not params[:follower].nil?
+      follower = User.find_by(name: params[:follower])
+    else
+      follower = User.all
+    end
+
+    if not params[:numbers].nil?
+      numbers = params[:numbers].to_i
+    else
+      # default count: 100
+      numbers = 100
+    end
+
+    @followings = Following.where(from_id: follower, to_id: followee).first(numbers)
+
   end
 
   # GET /followings/1
   # GET /followings/1.json
   def show
-
+    params.require(:id)
+    @following = Following.find(params[:id])
   end
 
   # POST /followings
   # POST /followings.json
   def create
-    @following = Following.new(following_params)
-    @following.from = current_user
 
-    if Following.all.where('from_id = ? and to_id = ?', user.id, user2.id).count > 0 then return false end
-
-    if @following.save
+    if not (following = Following.all.where('from_id = ? and to_id = ?', user.id, user2.id)).nil?
+      @following = following
       render :show, status: :created, location: @following
-    else
-      render json: @following.errors, status: :unprocessable_entity
+    else 
+
+      @following = Following.new(following_params)
+      @following.from = current_user
+
+      if @following.save
+        render :show, status: :created, location: @following
+      else
+        render json: @following.errors, status: :unprocessable_entity
+      end
+
     end
+
   end
 
   # PATCH/PUT /followings/1

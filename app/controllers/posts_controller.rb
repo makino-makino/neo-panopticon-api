@@ -33,7 +33,7 @@ class PostsController < ApplicationController
       start_id = 0
     end
 
-    @posts = Post.where('id > ? and created_at > ?', start_id, start_created)
+    @posts = Post.where('id >= ? and created_at >= ?', start_id, start_created)
                  .where(id: users)
                  .first(numbers)
 
@@ -69,15 +69,17 @@ class PostsController < ApplicationController
     @post = Post.find_by(params['id'])
 
     # validate
-    # return falseを仮置き
-    if PostEvaluation.find(@post.id) then return false end
-
-    @evaluation = PostEvaluation.new(post: @post, user:current_user, score: score)
-
-    if @evaluation.save
+    if not (evaluation = PostEvaluation.find_by(post_id: @post.id, user_id: current_user.id)).nil? 
+      @evaluation = evaluation
       render :eval
     else
-      render json: @evaluation.errors, status: :unprocessable_entity
+      @evaluation = PostEvaluation.new(post: @post, user:current_user, score: score)
+
+      if @evaluation.save
+        render :eval
+      else
+        render json: @evaluation.errors, status: :unprocessable_entity
+      end
     end
 
   end
