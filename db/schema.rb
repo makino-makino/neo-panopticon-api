@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2019_11_11_003030) do
     t.string "bio"
     t.string "phone", null: false
     t.string "email", null: false
-    t.string "image"
+    t.string "icon"
     t.text "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
