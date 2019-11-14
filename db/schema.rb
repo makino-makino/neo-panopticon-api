@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_12_231757) do
+ActiveRecord::Schema.define(version: 2019_11_11_003030) do
 
   create_table "followings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "from_id", null: false
@@ -51,18 +51,19 @@ ActiveRecord::Schema.define(version: 2019_11_12_231757) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_ip"
+    t.datetime "last_sign_in_ip"
     t.string "name", null: false
+    t.string "bio"
     t.string "phone", null: false
     t.string "email", null: false
     t.string "icon"
     t.text "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string "bio"
-    t.string "evaluation"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
