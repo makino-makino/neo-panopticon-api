@@ -8,11 +8,11 @@ class UsersController < ApplicationController
     @users = User.all
 
     if not params[:followee].nil?
-      @users = @users.find_by(name: params[:followee])
+      @users = @users.where(id: Following.where(from_id: params[:followee]))
     end
 
     if not params[:follower].nil?
-      @users = @users.find_by(name: params[:follower])
+      @users = @users.where(id: Following.where(to_id: params[:follower]))
     end
 
   end
