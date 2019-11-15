@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :users 
   resources :followings
+  resources :notifications
   
   resources :posts do
     member do
