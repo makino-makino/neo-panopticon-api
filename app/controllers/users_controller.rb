@@ -5,15 +5,25 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
-
     if not params[:followee].nil?
-      @users = @users.where(id: Following.where(from_id: params[:followee]))
+      @users = User.followees(params[:followee])
+
+    elsif not params[:follower].nil?
+      @users = User.followers(params[:follower])
+    
+    else
+      @users = User.all
+
+    end
+  
+    if not params[:number].nil?
+      number = params[:number].to_is
+    else
+      number = 20
     end
 
-    if not params[:follower].nil?
-      @users = @users.where(id: Following.where(to_id: params[:follower]))
-    end
+    return @users.first(number)
+
 
   end
 

@@ -5,13 +5,14 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    params.require(:type)
-    params.permit(:type, :numbers, :start_created, :start_id)
+    params.permit(:tl, :numbers, :start_created, :start_id)
 
     # set values
-    if params[:type] == "global"
+    if params[:tl].nil?
       users = User.all
-    elsif params[:type] == "local"
+    elsif params[:tl] == "world"
+      users = User.all
+    elsif params[:tl] == "local"
       users = User.where(id: Following.where(from: current_user.id))
     end
 
