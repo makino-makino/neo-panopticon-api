@@ -35,7 +35,18 @@ class PostsController < ApplicationController
 
     @posts = Post.where('id >= ? and created_at >= ?', start_id, start_created)
                  .where(id: users)
-                 .first(numbers)
+                 .first(numbers * 2)
+
+
+    # 各投稿の評価値(投稿の新しさ * evaluation)と対応するインデックスをvaluesにしまう
+    # 2要素の配列の配列
+    values = []
+    @posts.count.times do |i|
+      values[i] = [@posts[i].evaluation * (numbers - i + 1), i]
+    end
+
+    # valuesを評価値に基づいてソート→必要な数を取り出す→二つ目の要素を順に@postsに入れる
+    @posts = values.sort.first(numbers).reverse.map{ |x| x[1] }.sort.map{ |x| @posts[x] }
 
   end
 
@@ -69,11 +80,11 @@ class PostsController < ApplicationController
     @post = Post.find_by(params['id'])
 
     # validate
-    if not (evaluation = PostEvaluation.find_by(post_id: @post.id, user_id: current_user.id)).nil? 
+    if not (evaluation = Evaluation.find_by(post_id: @post.id, user_id: current_user.id)).nil? 
       @evaluation = evaluation
       render :eval
     else
-      @evaluation = PostEvaluation.new(post: @post, user:current_user, score: score)
+      @evaluation = Evaluation.new(post: @post, user:current_user, score: score)
 
       if @evaluation.save
         render :eval
