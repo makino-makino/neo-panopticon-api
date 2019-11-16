@@ -22,18 +22,18 @@ class PostsController < ApplicationController
       numbers = 20
     end
 
-    if not params[:start_created].nil?
-      start_created = params[:start_created]
-    else
-      start_created = 0
-    end
-
     if not params[:start_id].nil?
       start_id = params[:start_id]
     else
       start_id = 0
     end
 
+    if not params[:start_created].nil?
+      start_created = params[:start_created]
+    else
+      start_created = 0
+    end
+    
     @posts = Post.tl(users, numbers, start_id, start_created)
     
   end

@@ -3,13 +3,15 @@ class Evaluation < ApplicationRecord
   belongs_to :user
 
   def self.eval_post(post)
-    plus  = where('post_id = ? and is_positive = ?', post.id, true).count()
-    minus = where('post_id = ? and is_positive = ?', post.id, false).count()
+    plus  = where('post_id = ? and is_positive = ?', post.id, true).count
+    minus = where('post_id = ? and is_positive = ?', post.id, false).count
 
-    plus = 1.0 if plus.zero?
-    minus = 1.0 if minus.zero?
+    if plus.zero? or minus.zero?
+        plus += 1
+        minus += 1
+    end
 
-    plus / minus.to_f
+    (plus / minus).to_f
   end
 
   def self.eval_user(user)
