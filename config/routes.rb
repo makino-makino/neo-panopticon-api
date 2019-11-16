@@ -14,5 +14,7 @@ Rails.application.routes.draw do
   }
 
   get 'user/:id', to: 'users#show'
+
+  get 'evaluations/:id', to: 'evaluations#show'
   
 end
