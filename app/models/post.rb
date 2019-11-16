@@ -3,17 +3,22 @@ class Post < ApplicationRecord
 
   def self.tl(users, numbers, start_id, start_created)
 
-    if numbers >= Post.count then numbers = Post.count end
+    if numbers >= Post.count 
+      numbers = Post.count
+      count = Post.count
+    else
+      count = numbers * 2
+    end
 
     posts = where('id >= ? and created_at >= ?', start_id, start_created)
-            .last(numbers * 2)
+            .last(count)
 
     # 各投稿の評価値(投稿の新しさ * evaluation)と対応するインデックスをvaluesにしまう
     # 2要素の配列の配列
     values = []
     i = 0
     posts.each do |post|
-      values[i] = [Evaluation.eval_post(posts[i]) * (numbers * 2 - i + 1), i]
+      values[i] = [Evaluation.eval_post(post) * (i + 1), i]
       i += 1
     end
 
@@ -23,7 +28,6 @@ class Post < ApplicationRecord
                   .map{ |x| posts[x[1]] }
                   .sort
                   .reverse
-                  # .map{ |x| posts[x] }
 
 
     return posts
