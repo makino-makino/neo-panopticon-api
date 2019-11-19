@@ -34,13 +34,13 @@ class EvaluationsController < ApplicationController
 
   # PATCH/PUT /evaluations/1
   # PATCH/PUT /evaluations/1.json
-  # def update
-  #   if @evaluation.update(evaluation_params)
-  #     render :show, status: :ok, location: @evaluation
-  #   else
-  #     render json: @evaluation.errors, status: :unprocessable_entity
-  #   end
-  # end
+  def update
+    if @evaluation.update(evaluation_params)
+      render :show, status: :ok, location: @evaluation
+    else
+      render json: @evaluation.errors, status: :unprocessable_entity
+    end
+  end
 
   # DELETE /evaluations/1
   # DELETE /evaluations/1.json

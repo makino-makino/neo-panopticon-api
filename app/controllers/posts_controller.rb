@@ -47,7 +47,16 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(post_params)
+    params.permit(:content, :type, :souce_id)
+
+    if params[:type] == "0"
+      # 普通のポスト
+      @post = Post.new(content: params[:content])
+    elsif params[:type] == "1"
+      # リツイート
+      @post = Post.new(content: params[:content], source_id: params[:source_id])
+    end
+
     @post.user = current_user
 
     if @post.save
@@ -107,6 +116,6 @@ class PostsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
       params.require(:content)
-      params.permit(:content)
+      params.permit(:content) #, :type, :souce_id)
     end
 end
