@@ -16,6 +16,16 @@ class NotificationsController < ApplicationController
         content LIKE :name
 
       UNION SELECT
+        'retweeted'
+        , id
+        , updated_at
+      FROM
+        posts
+      WHERE
+        source_id = :id
+      
+
+      UNION SELECT
         'followed'
         , id
         , updated_at
