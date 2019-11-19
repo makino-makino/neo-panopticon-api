@@ -10,7 +10,7 @@ class PostsController < ApplicationController
     # set values
     if params[:tl].nil?
       users = User.all
-    elsif params[:tl] == "world"
+    elsif params[:tl] == "global"
       users = User.all
     elsif params[:tl] == "local"
       users = User.where(id: Following.where(from: current_user.id))
@@ -22,34 +22,41 @@ class PostsController < ApplicationController
       numbers = 20
     end
 
-    if not params[:start_created].nil?
-      start_created = params[:start_created]
-    else
-      start_created = 0
-    end
-
     if not params[:start_id].nil?
       start_id = params[:start_id]
     else
       start_id = 0
     end
 
-    @posts = Post.where('id >= ? and created_at >= ?', start_id, start_created)
-                 .where(id: users)
-                 .first(numbers)
-
+    if not params[:start_created].nil?
+      start_created = params[:start_created]
+    else
+      start_created = 0
+    end
+    
+    @posts = Post.tl(users, numbers, start_id, start_created)
+    
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @score = PostEvaluation.eval_post(@post)
+    @score = Evaluation.eval_post(@post)
   end
 
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(post_params)
+    params.permit(:content, :type, :souce_id)
+
+    if params[:type] == "0"
+      # 普通のポスト
+      @post = Post.new(content: params[:content])
+    elsif params[:type] == "1"
+      # リツイート
+      @post = Post.new(content: params[:content], source_id: params[:source_id])
+    end
+
     @post.user = current_user
 
     if @post.save
@@ -65,16 +72,15 @@ class PostsController < ApplicationController
     score = params[:score]
 
     # TODO: Validation
-    # -> done
 
-    @post = Post.find_by(params['id'])
+    @post = Post.find(params['id'])
 
     # validate
-    if not (evaluation = PostEvaluation.find_by(post_id: @post.id, user_id: current_user.id)).nil? 
+    if not (evaluation = Evaluation.find_by(post_id: @post.id, user_id: current_user.id)).nil? 
       @evaluation = evaluation
       render :eval
     else
-      @evaluation = PostEvaluation.new(post: @post, user:current_user, score: score)
+      @evaluation = Evaluation.new(post: @post, user:current_user, score: score)
 
       if @evaluation.save
         render :eval
@@ -110,6 +116,6 @@ class PostsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
       params.require(:content)
-      params.permit(:content)
+      params.permit(:content) #, :type, :souce_id)
     end
 end

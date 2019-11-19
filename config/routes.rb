@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :evaluations
   resources :users 
   resources :followings
   resources :notifications
@@ -13,6 +14,4 @@ Rails.application.routes.draw do
     registrations: 'auth/registrations'
   }
 
-  get 'user/:id', to: 'users#show'
-  
 end
