@@ -14,7 +14,10 @@ ActiveRecord::Schema.define(version: 2019_11_19_043115) do
 
   create_table "evaluations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "post_id"
-    t.integer "score"
+    t.integer "user_id"
+    t.boolean "is_positive"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_evaluations_on_post_id"
   end
 
@@ -25,16 +28,6 @@ ActiveRecord::Schema.define(version: 2019_11_19_043115) do
     t.datetime "updated_at", null: false
     t.index ["from_id"], name: "index_followings_on_from_id"
     t.index ["to_id"], name: "index_followings_on_to_id"
-  end
-
-  create_table "post_evaluations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "post_id"
-    t.bigint "user_id"
-    t.float "score"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_post_evaluations_on_post_id"
-    t.index ["user_id"], name: "index_post_evaluations_on_user_id"
   end
 
   create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -82,7 +75,5 @@ ActiveRecord::Schema.define(version: 2019_11_19_043115) do
   add_foreign_key "evaluations", "posts"
   add_foreign_key "followings", "users", column: "from_id"
   add_foreign_key "followings", "users", column: "to_id"
-  add_foreign_key "post_evaluations", "posts"
-  add_foreign_key "post_evaluations", "users"
   add_foreign_key "posts", "users"
 end

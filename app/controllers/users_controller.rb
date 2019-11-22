@@ -35,16 +35,16 @@ class UsersController < ApplicationController
 
   # POST /users
   # POST /users.json
-  def create
-    params.require([:name, :email, :phone, :password])
-    @user = User.new(name: params[:name], email: params[:email], phone: params[:phone], password: params[:password])
+  # def create
+  #   params.require([:name, :email, :phone, :password])
+  #   @user = User.new(name: params[:name], email: params[:email], phone: params[:phone], password: params[:password])
 
-    if @user.save
-      render :show, status: :created, location: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
-  end
+  #   if @user.save
+  #     render :show, status: :created, location: @user
+  #   else
+  #     render json: @user.errors, status: :unprocessable_entity
+  #   end
+  # end
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json

@@ -20,7 +20,7 @@ class EvaluationsController < ApplicationController
   def create
     if not (evaluation = Evaluation.find_by(post_id:params[:post_id], user_id: current_user)).nil?
       @evaluation = evaluation
-      render :show, status: 400, location: evaluation
+      render :show, status: 400, location: @evaluation
     else
       @evaluation = Evaluation.new(post_id: params[:post_id], is_positive: params[:is_positive], user: current_user)
 

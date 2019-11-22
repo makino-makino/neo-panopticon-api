@@ -13,7 +13,7 @@ if notification["replied"] == "followed"
         json.name user.name
         json.bio  user.bio
         json.icon user.icon
-        json.evaluation PostEvaluation.eval_user(user)
+        json.evaluation Evaluation.eval_user(user)
     end
 else
     post = Post.find(content_id)
@@ -21,6 +21,6 @@ else
         json.id post.id
         json.user_id post.user_id
         json.content post.content
-        json.evaluation PostEvaluation.eval_post(post)
+        json.evaluation Evaluation.eval_post(post)
     end
 end
