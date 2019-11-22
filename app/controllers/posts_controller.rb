@@ -49,10 +49,10 @@ class PostsController < ApplicationController
   def create
     params.permit(:content, :type, :souce_id)
 
-    if params[:type] == "0"
+    if params[:source_id].nil? 
       # 普通のポスト
       @post = Post.new(content: params[:content])
-    elsif params[:type] == "1"
+    elsif Post.find(params[:source_id]).nil?
       # リツイート
       @post = Post.new(content: params[:content], source_id: params[:source_id])
     end
