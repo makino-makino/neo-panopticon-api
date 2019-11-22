@@ -1,7 +1,7 @@
 class Post < ApplicationRecord
   belongs_to :user
 
-  def self.tl(users, numbers, start_id, start_created)
+  def self.tl(tl, users, numbers, start_id, start_created)
 
     if numbers >= Post.count 
       numbers = Post.count
@@ -18,14 +18,28 @@ class Post < ApplicationRecord
     values = []
     i = 0
     posts.each do |post|
-      values[i] = [Evaluation.eval_post(post) * (i + 1), i]
+      values.push [Evaluation.eval_post(post) * (i + 1), post]
       i += 1
     end
 
-    # valuesを評価値に基づいてソート→必要な数を取り出す→二つ目の要素を順に@postsに入れる
+    if tl == "local"
+      evals_counts = Evaluation.where(user_id: users).group(:post_id).count(:post_id)
+      evals_ids = evals_counts.values.sort.reverse
+      x = i / 2
+
+      evals_counts.keys.each do |id|
+        post = Post.find(id)
+        values.push [Evaluation.eval_post(post) * x, post]
+        posts.push post
+      end
+    end
+
+    # valuesを評価値に基づいてソート→必要な数を取り出す→二つ目の要素を順にpostsに入れる
     posts = values.sort
-                  .last(numbers)
-                  .map{ |x| posts[x[1]] }
+                  .map{ |x| x[1] }
+                  .reverse
+                  .uniq
+                  .first(numbers)
                   .sort
                   .reverse
 
@@ -38,4 +52,5 @@ class Post < ApplicationRecord
 
 
   end
+
 end

@@ -1,5 +1,5 @@
 class FollowingsController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :set_following, only: [:show, :update, :destroy]
 
   # GET /followings
@@ -37,7 +37,7 @@ class FollowingsController < ApplicationController
   # PATCH/PUT /followings/1
   # PATCH/PUT /followings/1.json
   def update
-    if @following.update(following_params)
+    if @following.update(from: User.find(following_params[:from_id]), to: User.find(following_params[:to_id]))
       render :show, status: :ok, location: @following
     else
       render json: @following.errors, status: :unprocessable_entity
