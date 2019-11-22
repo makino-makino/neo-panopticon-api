@@ -14,4 +14,6 @@ Rails.application.routes.draw do
     registrations: 'auth/registrations'
   }
 
+  put 'followings/:id', to: 'followings#update'
+
 end

@@ -3,6 +3,7 @@ require 'test_helper'
 class FollowingsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @following = followings(:one)
+    @following.save
   end
 
   test "should get index" do
@@ -12,7 +13,7 @@ class FollowingsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create following" do
     assert_difference('Following.count') do
-      post followings_url, params: { following: { user_id: @following.user_id } }, as: :json
+      post followings_url, params: { to_id: @following.to_id, from_id: @following.from_id }, as: :json
     end
 
     assert_response 201
@@ -24,7 +25,7 @@ class FollowingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update following" do
-    patch following_url(@following), params: { following: { user_id: @following.user_id } }, as: :json
+    patch following_url(@following), params: { to_id: @following.to_id, from_id: @following.from_id }, as: :json
     assert_response 200
   end
 

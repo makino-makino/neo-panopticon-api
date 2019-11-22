@@ -34,7 +34,7 @@ class PostsController < ApplicationController
       start_created = 0
     end
     
-    @posts = Post.tl(users, numbers, start_id, start_created)
+    @posts = Post.tl(params[:tl], users, numbers, start_id, start_created)
     
   end
 
