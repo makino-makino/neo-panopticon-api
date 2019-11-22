@@ -47,12 +47,12 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    params.permit(:content, :type, :souce_id)
+    params.permit(:content, :souce_id)
 
-    if params[:source_id].nil? 
+    if params[:source_id].nil?
       # 普通のポスト
       @post = Post.new(content: params[:content])
-    elsif Post.find(params[:source_id]).nil?
+    elsif not Post.find(params[:source_id]).nil?
       # リツイート
       @post = Post.new(content: params[:content], source_id: params[:source_id])
     end

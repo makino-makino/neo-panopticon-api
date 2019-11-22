@@ -18,7 +18,7 @@ class Post < ApplicationRecord
     values = []
     i = 0
     posts.each do |post|
-      values.push [Evaluation.eval_post(post) * (i + 1), post]
+      values[i] = [Evaluation.eval_post(post) * Evaluation.eval_user(post.user) * (i + 1), post]
       i += 1
     end
 
@@ -29,7 +29,7 @@ class Post < ApplicationRecord
 
       evals_counts.keys.each do |id|
         post = Post.find(id)
-        values.push [Evaluation.eval_post(post) * x, post]
+        values.push [Evaluation.eval_post(post) * Evaluation.eval_user(post.user) * (x + 1), post]
         posts.push post
       end
     end
