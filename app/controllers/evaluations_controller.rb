@@ -18,17 +18,16 @@ class EvaluationsController < ApplicationController
   # POST /evaluations
   # POST /evaluations.json
   def create
-    if not (evaluation = Evaluation.find_by(post_id:params[:post_id], user_id: current_user)).nil?
-      @evaluation = evaluation
-      render :show, status: 400, location: @evaluation
+    if not (@evaluation = Evaluation.find_by(post_id:params[:post_id], user_id: current_user)).nil?
+      @evaluation.is_positive = params[:is_positive]
     else
       @evaluation = Evaluation.new(post_id: params[:post_id], is_positive: params[:is_positive], user: current_user)
+    end
 
-      if @evaluation.save
-        render :show, status: :created, location: @evaluation
-      else
-        render json: @evaluation.errors, status: :unprocessable_entity
-      end
+    if @evaluation.save
+      render :show, status: :created, location: @evaluation
+    else
+      render json: @evaluation.errors, status: :unprocessable_entity
     end
   end
 

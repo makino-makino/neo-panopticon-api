@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/followings/has_followed',  to: 'followings#has_followed'
+  
   resources :evaluations
   resources :users 
   resources :followings
