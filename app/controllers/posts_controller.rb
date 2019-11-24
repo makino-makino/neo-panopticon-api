@@ -37,7 +37,6 @@ class PostsController < ApplicationController
       return
     end
 
-        
     @posts = Post.tl(params[:tl], users, numbers, start_id, start_created)
     
   end
