@@ -34,7 +34,8 @@ class PostsController < ApplicationController
     elsif params[:tl] == "global"
       users = User.all
     elsif params[:tl] == "local"
-      users = User.where(id: Following.where(from: current_user.id))
+      followings = Following.where(from: current_user).first()
+      users = User.where(id: followings.to_id)
     elsif params[:tl] == "user" and not params[:user_id].nil?
       @posts = Post.userTL(params[:user_id], numbers, start_id, start_created)
       return
