@@ -15,6 +15,30 @@ class FollowingsController < ApplicationController
     @following = Following.find(params[:id])
   end
 
+  def has_followed
+    if (not params[:to_id].nil?) and (not params[:from_id].nil?)
+      if not (@following = Following.find_by(to_id:params[:to_id], from_id:params[:from_id])).nil?  
+        has_followed = true
+        from_id = @following.from_id
+        to_id = @following.to_id
+      else
+        has_followed = false
+        from_id = nil
+        to_id = nil
+      end
+
+      result = {
+        'has_followed': has_followed,
+        'from_id': from_id,
+        'to_id': to_id,
+      }
+
+      render :json => result
+    else
+      render :show, status: 400, location: following
+    end 
+  end
+
   # POST /followings
   # POST /followings.json
   def create
