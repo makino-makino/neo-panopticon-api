@@ -27,7 +27,10 @@ class PostsController < ApplicationController
 
     # set values
     if params[:tl].nil?
-      users = User.all
+      # デバッグ用
+      @posts = Post.last(10)
+      render :for_debug, status: :ok, location: @post
+      return
     elsif params[:tl] == "global"
       users = User.all
     elsif params[:tl] == "local"
@@ -36,9 +39,11 @@ class PostsController < ApplicationController
       @posts = Post.userTL(params[:user_id], numbers, start_id, start_created)
       return
     end
-
+ 
     @posts = Post.tl(params[:tl], users, numbers, start_id, start_created)
+    render :for_debug, status: :ok, location: @post
     
+    return 
   end
 
   # GET /posts/1
