@@ -6,12 +6,15 @@ class Evaluation < ApplicationRecord
     plus  = where('post_id = ? and is_positive = ?', post.id, true).count
     minus = where('post_id = ? and is_positive = ?', post.id, false).count
 
-    if plus.zero? or minus.zero?
-        plus += 1
-        minus += 1
+    if plus.zero?
+      plus = 1
     end
 
-    (plus / minus).to_f
+    if minus.zero?
+      minus = 1
+    end
+
+    plus / minus.to_f
   end
 
   def self.eval_user(user)
