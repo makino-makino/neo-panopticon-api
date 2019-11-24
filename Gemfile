@@ -30,6 +30,11 @@ gem 'sprockets', '~> 3.7', '>= 3.7.2'
 gem 'devise'
 gem 'devise_token_auth'
 
+# sms api
+gem 'twilio-ruby', '~> 5.26.0'
+# +81 ni kaetekureru yatsu
+gem 'phony_rails'
+
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
