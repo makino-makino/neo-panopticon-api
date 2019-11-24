@@ -53,5 +53,10 @@ class Post < ApplicationRecord
 
 
   end
+  
+  def self.userTL(user_id, numbers, start_id, start_created)
+    posts = Post.where(user_id: user_id)
 
+    return posts
+  end
 end

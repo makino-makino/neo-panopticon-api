@@ -5,18 +5,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    params.permit(:tl, :numbers, :start_created, :start_id)
-
-    # set values
-    if params[:tl].nil?
-      users = User.all
-    elsif params[:tl] == "global"
-      users = User.all
-    elsif params[:tl] == "local"
-      users = User.where(id: Following.where(from: current_user.id))
-    elsif params[:tl] == "user"
-      users = User.where(id: current_user.id)
-    end
+    params.permit(:tl, :numbers, :start_created, :start_id, :user_id)
 
     if not params[:numbers].nil?
       numbers = params[:numbers].to_i
@@ -35,7 +24,20 @@ class PostsController < ApplicationController
     else
       start_created = 0
     end
-    
+
+    # set values
+    if params[:tl].nil?
+      users = User.all
+    elsif params[:tl] == "global"
+      users = User.all
+    elsif params[:tl] == "local"
+      users = User.where(id: Following.where(from: current_user.id))
+    elsif params[:tl] == "user" and not params[:user_id].nil?
+      @posts = Post.userTL(params[:user_id], numbers, start_id, start_created)
+      return
+    end
+
+        
     @posts = Post.tl(params[:tl], users, numbers, start_id, start_created)
     
   end
