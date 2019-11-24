@@ -14,6 +14,8 @@ class PostsController < ApplicationController
       users = User.all
     elsif params[:tl] == "local"
       users = User.where(id: Following.where(from: current_user.id))
+    elsif params[:tl] == "user"
+      users = User.where(id: current_user.id)
     end
 
     if not params[:numbers].nil?
