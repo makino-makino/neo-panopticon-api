@@ -44,9 +44,17 @@ class FollowingsController < ApplicationController
   def create
     params.require(:to_id)
 
-    if not (following = Following.find_by(to_id:params[:to_id], from:current_user)).nil?
-      @following = following
-      render :show, status: 400, location: following
+    if not (@following = Following.find_by(to_id:params[:to_id], from:current_user)).nil?
+
+      @following.destroy
+
+      result = {
+        'id': nil,
+        'from_id': nil,
+        'to_id': nil,
+      }
+
+      render :json => result
     else
       @following = Following.new(to_id:params[:to_id], from:current_user)
 
