@@ -2,11 +2,9 @@ class Post < ApplicationRecord
   belongs_to :user
 
   def self.tl(tl, users, numbers, start_id, start_created)
-
-
-    if numbers >= Post.count 
-      numbers = Post.count / 2
-      count = Post.count
+    if numbers >= Post.count
+      numbers = 10
+      count = 20
     else
       count = numbers * 2
     end
