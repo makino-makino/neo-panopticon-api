@@ -11,6 +11,7 @@ class Post < ApplicationRecord
     end
 
     posts = where('id >= ? and created_at >= ?', start_id, start_created)
+            .where(id: users.select('id'))
             .last(count)
 
     # 各投稿の評価値(投稿の新しさ * evaluation)と対応するインデックスをvaluesにしまう
