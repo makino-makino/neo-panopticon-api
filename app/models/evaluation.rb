@@ -15,7 +15,6 @@ class Evaluation < ApplicationRecord
   end
 
   def self.eval_user(user)
-
     plus = includes(:post).where(
         is_positive: true,
         posts: { user_id: user.id }
@@ -26,8 +25,10 @@ class Evaluation < ApplicationRecord
         posts: { user_id: user.id }
     ).count()
 
-    plus = 1.0 if plus.zero?
-    minus = 1.0 if minus.zero?
+    if plus.zero? or minus.zero?
+      plus += 1
+      minus += 1
+    end
 
     plus / minus.to_f
   end
