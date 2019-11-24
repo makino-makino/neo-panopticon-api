@@ -5,7 +5,7 @@ class Post < ApplicationRecord
 
 
     if numbers >= Post.count 
-      numbers = Post.count
+      numbers = Post.count / 2
       count = Post.count
     else
       count = numbers * 2
@@ -14,7 +14,6 @@ class Post < ApplicationRecord
     posts = where('id >= ? and created_at >= ?', start_id, start_created)
             .where(user_id: users.select('id'))
             .last(count)
-    # puts posts
 
     # 各投稿の評価値(投稿の新しさ * evaluation)と対応するインデックスをvaluesにしまう
     # 2要素の配列の配列
