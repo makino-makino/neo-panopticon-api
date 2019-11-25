@@ -10,7 +10,7 @@ class PostsController < ApplicationController
     if not params[:numbers].nil?
       numbers = params[:numbers].to_i
     else
-      numbers = 20
+      numbers = 10
     end
 
     if not params[:start_id].nil?
@@ -27,18 +27,24 @@ class PostsController < ApplicationController
 
     # set values
     if params[:tl].nil?
-      users = User.all
+      # デバッグ用
+      @posts = Post.last(10)
+      render :for_debug, status: :ok, location: @post
+      return
     elsif params[:tl] == "global"
       users = User.all
     elsif params[:tl] == "local"
-      users = User.where(id: Following.where(from: current_user.id))
+      followings = Following.where(from: current_user).first()
+      users = User.where(id: followings.to_id)
     elsif params[:tl] == "user" and not params[:user_id].nil?
       @posts = Post.userTL(params[:user_id], numbers, start_id, start_created)
       return
     end
-
+ 
     @posts = Post.tl(params[:tl], users, numbers, start_id, start_created)
+    render :for_debug, status: :ok, location: @post
     
+    return 
   end
 
   # GET /posts/1
