@@ -4,9 +4,9 @@ class Post < ApplicationRecord
   def self.tl(tl, users, numbers, start_id, start_created)
 
 
-    if numbers >= Post.count or numbers > 10
-      numbers = 10
-      count = 20
+    if numbers >= Post.count 
+      numbers = Post.count / 2
+      count = Post.count
     else
       count = numbers * 2
     end

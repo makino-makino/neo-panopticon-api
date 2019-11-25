@@ -10,7 +10,7 @@ class PostsController < ApplicationController
     if not params[:numbers].nil?
       numbers = params[:numbers].to_i
     else
-      numbers = 10
+      numbers = 20
     end
 
     if not params[:start_id].nil?
