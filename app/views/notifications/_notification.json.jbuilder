@@ -17,11 +17,13 @@ if notification["replied"] == "followed"
     end
 else
     post = Post.find(content_id)
+    user = User.find(post.user_id)
     json.set! :post do
-        json.id post.id
-        json.name User.find(post.user_id).name
-        json.user_id post.user_id
+        json.name user.name
+        json.user_id user.id
         json.content post.content
+        json.id post.id
+        json.icon user.icon
         json.evaluation Evaluation.eval_post(post)
     end
 end
