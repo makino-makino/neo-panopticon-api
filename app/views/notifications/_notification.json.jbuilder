@@ -19,6 +19,7 @@ else
     post = Post.find(content_id)
     json.set! :post do
         json.id post.id
+        json.name User.find(post.user_id).name
         json.user_id post.user_id
         json.content post.content
         json.evaluation Evaluation.eval_post(post)
