@@ -11,7 +11,7 @@ class Evaluation < ApplicationRecord
       minus += 1
     end
 
-    plus / minus.to_f
+    (plus / minus.to_f) ** 0.5
   end
 
   def self.eval_user(user)
@@ -30,7 +30,7 @@ class Evaluation < ApplicationRecord
       minus += 1
     end
 
-    plus / minus.to_f
+    (plus / minus.to_f) ** 0.5
   end
     
 end
