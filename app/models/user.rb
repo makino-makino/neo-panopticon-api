@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
   validates :name, uniqueness: true
   validates :email, uniqueness: true
-  validates :phone, uniqueness: true
+  # validates :phone, uniqueness: true
 
   def self.followees(followee)
     followees_ids = Following.where(from_id: followee).select("to_id")
