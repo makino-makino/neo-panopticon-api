@@ -100,6 +100,8 @@ GEM
       phony (> 2.15)
     puma (3.12.3)
     rack (2.2.2)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.4.1)
@@ -173,6 +175,7 @@ DEPENDENCIES
   mysql2 (>= 0.4.4, < 0.6.0)
   phony_rails
   puma (~> 3.12)
+  rack-cors
   rails (~> 5.2.3)
   spring
   spring-watcher-listen (~> 2.0.0)
