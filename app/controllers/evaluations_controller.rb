@@ -43,10 +43,6 @@ class EvaluationsController < ApplicationController
 
   # DELETE /evaluations/1
   # DELETE /evaluations/1.json
-  # def destroy
-  #   @evaluation.destroy
-  # end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_evaluation

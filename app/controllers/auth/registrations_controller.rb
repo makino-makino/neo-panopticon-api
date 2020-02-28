@@ -6,8 +6,6 @@ module Auth
 			request.session_options[:skip] = true
 		end
 
-
-
 		private
 		def sign_up_params
 			params.require(:name)

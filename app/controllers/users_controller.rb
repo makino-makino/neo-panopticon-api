@@ -33,35 +33,6 @@ class UsersController < ApplicationController
     @score = Evaluation.eval_user(@user)
   end
 
-  # POST /users
-  # POST /users.json
-  # def create
-  #   params.require([:name, :email, :phone, :password])
-  #   @user = User.new(name: params[:name], email: params[:email], phone: params[:phone], password: params[:password])
-
-  #   if @user.save
-  #     render :show, status: :created, location: @user
-  #   else
-  #     render json: @user.errors, status: :unprocessable_entity
-  #   end
-  # end
-
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
-  # def update
-  #   if @user.update(user_params)
-  #     render :show, status: :ok, location: @user
-  #   else
-  #     render json: @user.errors, status: :unprocessable_entity
-  #   end
-  # end
-
-  # DELETE /users/1
-  # DELETE /users/1.json
-  # def destroy
-  #   @user.destroy
-  # end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
