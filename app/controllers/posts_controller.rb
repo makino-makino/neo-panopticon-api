@@ -7,50 +7,19 @@ class PostsController < ApplicationController
   def index
     params.permit(:tl, :numbers, :start_created, :start_id, :user_id)
 
-    if not params[:numbers].nil?
-      numbers = params[:numbers].to_i
-    else
-      numbers = 10
-    end
+    numbers = params[:numbers].nil? ? 10 : params[:numbers].to_i
+    start_id = params[:start_id].nil? ? 0 : params[:start_id].to_i
+    start_created = params[:start_created].nil? ? 0 : params[:start_created].to_i
 
-    if not params[:start_id].nil?
-      start_id = params[:start_id]
-    else
-      start_id = 0
-    end
-
-    if not params[:start_created].nil?
-      start_created = params[:start_created]
-    else
-      start_created = 0
-    end
-
-    # set values
-    if params[:tl].nil?
-      # デバッグ用
-      @posts = Post.last(10)
-      render :for_debug, status: :ok, location: @post
-      return
-    elsif params[:tl] == "global"
+    # if params[:tl] == "local"
+    #   followings = Following.where(from: current_user)
+    #   users = User.where(user: followings)
+    # else
       users = User.all
-    elsif params[:tl] == "local"
-      followings = Following.where(from: current_user).first()
-      
-      if followings.nil?
-        @posts = []
-        return
-      end
+    # end
 
-      users = User.where(id: followings.to_id)
-    elsif params[:tl] == "user" and not params[:user_id].nil?
-      @posts = Post.userTL(params[:user_id], numbers, start_id, start_created)
-      return
-    end
- 
+
     @posts = Post.tl(params[:tl], users, numbers, start_id, start_created)
-    render :for_debug, status: :ok, location: @post
-    
-    return 
   end
 
   # GET /posts/1
@@ -91,8 +60,8 @@ class PostsController < ApplicationController
     @post = Post.find(params['id'])
 
     # validate
-    if not (evaluation = Evaluation.find_by(post_id: @post.id, user_id: current_user.id)).nil? 
-      @evaluation = evaluation
+    @evaluation = Evaluation.find_by(post_id: @post.id, user_id: current_user.id)
+    if not (@evaluation).nil? 
       render :eval
     else
       @evaluation = Evaluation.new(post: @post, user:current_user, score: score)
@@ -117,4 +86,5 @@ class PostsController < ApplicationController
       params.require(:content)
       params.permit(:content) #, :type, :souce_id)
     end
+
 end
