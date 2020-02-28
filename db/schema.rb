@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_19_043115) do
+ActiveRecord::Schema.define(version: 2020_02_28_053447) do
 
   create_table "evaluations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "post_id"
@@ -58,7 +58,6 @@ ActiveRecord::Schema.define(version: 2019_11_19_043115) do
     t.datetime "last_sign_in_ip"
     t.string "name", null: false
     t.string "bio"
-    t.string "phone", null: false
     t.string "email", null: false
     t.string "icon"
     t.text "tokens"
@@ -67,7 +66,6 @@ ActiveRecord::Schema.define(version: 2019_11_19_043115) do
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
-    t.index ["phone"], name: "index_users_on_phone", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
