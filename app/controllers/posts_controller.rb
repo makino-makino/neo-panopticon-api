@@ -18,7 +18,6 @@ class PostsController < ApplicationController
       users = User.all
     # end
 
-
     @posts = Post.tl(params[:tl], users, numbers, start_id, start_created)
   end
 
@@ -33,14 +32,7 @@ class PostsController < ApplicationController
   def create
     params.permit(:content, :souce_id)
 
-    if params[:source_id].nil?
-      # 普通のポスト
-      @post = Post.new(content: params[:content])
-    elsif not Post.find(params[:source_id]).nil?
-      # リツイート
-      @post = Post.new(content: params[:content], source_id: params[:source_id])
-    end
-
+    @post = Post.new(content: params[:content])
     @post.user = current_user
 
     if @post.save
