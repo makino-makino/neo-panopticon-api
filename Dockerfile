@@ -11,3 +11,5 @@ ADD ./Gemfile /api/Gemfile
 
 RUN bundle update && \
     bundle install
+
+RUN apt-get install -y vim mysql-client
