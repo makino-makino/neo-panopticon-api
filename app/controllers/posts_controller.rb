@@ -8,6 +8,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
+    # ToDo: start_idの適用
     params.permit(:tl, :number, :start_id, :user_id)
 
     number = params[:number].nil? ? DEFAULT_NUMBER : params[:number].to_i
