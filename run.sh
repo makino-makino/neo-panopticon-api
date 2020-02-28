@@ -1,5 +1,5 @@
-bundle update
-bundle install
+#bundle update
+#bundle install
 
 rails db:create
 rails db:migrate RAILS_ENV=development
