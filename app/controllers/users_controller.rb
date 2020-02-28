@@ -23,8 +23,6 @@ class UsersController < ApplicationController
     end
 
     return @users.first(number)
-
-
   end
 
   # GET /users/1
@@ -41,7 +39,10 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.permit([:name, :email, :phone, :password])
-      params.require([:name, :email, :phone, :password])
+      # params.permit([:name, :email, :phone, :password])
+      # params.require([:name, :email, :phone, :password])
+      params.permit([:name, :email, :password])
+      params.require([:name, :email, :password])
+
     end
 end
