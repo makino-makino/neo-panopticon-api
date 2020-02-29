@@ -8,7 +8,7 @@ class Post < ApplicationRecord
   end
 
   def self.choose(posts)
-    number = self.count / 2
+    number = posts.count / 2
     pairs = []
     
     index = 0
