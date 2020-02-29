@@ -2,6 +2,26 @@ class EvaluationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_evaluation, only: [:create]
 
+  DEFAULT_POST_ID = 0
+
+  # GET /evaluations
+  # GET /evaluations.json
+  def index
+    params.permit(:user_id, :post_id)
+    @evaluations = Evaluation.all
+
+    user_id = params[:user_id]
+    post_id = params[:post_id]
+
+    unless post_id.nil? then
+      @evaluations = @evaluation.where(user_id: user_id)
+    end
+
+    unless post_id.nil? then
+      @evaluations = @evaluation.where(post_id: post_id)
+    end
+  end
+
   # POST /evaluations
   # POST /evaluations.json
   def create
