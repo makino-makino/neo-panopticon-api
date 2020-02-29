@@ -5,9 +5,11 @@ class EvaluationsController < ApplicationController
   # POST /evaluations
   # POST /evaluations.json
   def create
-    is_positive = @evaluation.is_positive
+    # ToDo: 名前の変更
+    score = params[:score]
+    
 
-    if @evaluation.update_attributes(is_positive: !is_positive)
+    if @evaluation.update_attributes(score: score)
       render :show, status: :ok, location: @evaluation
     else
       render json: @evaluation.errors, status: :unprocessable_entity
