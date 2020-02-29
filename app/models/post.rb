@@ -3,7 +3,7 @@ class Post < ApplicationRecord
 
   def self.local(user)
     followees = user.followees()
-    followees_evaluations = Evaluation.where(user: followees, is_positive: true)
+    followees_evaluations = Evaluation.where(user: followees, score: 1)
     return where(`id == or ? user == ? or user == self`, followees_evaluations.ids, followees, self)
   end
 
