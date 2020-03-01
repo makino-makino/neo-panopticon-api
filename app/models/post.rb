@@ -3,8 +3,11 @@ class Post < ApplicationRecord
 
   def self.local(user)
     followees = user.followees()
-    followees_evaluations = Evaluation.where(user: followees, score: 1)
-    return where(`id == or ? user == ? or user == self`, followees_evaluations.ids, followees, self)
+    followees_evaluations_ids = Evaluation.where(user: followees, score: 1).select('post_id')
+    
+    return Post.where(id: followees_evaluations_ids)
+            .or(Post.where(user: user))
+            .or(Post.where(user: followees))
   end
 
   def self.choose(posts)
