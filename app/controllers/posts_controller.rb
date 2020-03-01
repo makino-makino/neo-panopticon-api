@@ -9,16 +9,17 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     # ToDo: start_idの適用
-    params.permit(:tl, :number, :start_id, :user_id)
+    params.permit(:tl, :number, :start_id, :user_id, :type)
 
     number = params[:number].nil? ? DEFAULT_NUMBER : params[:number].to_i
     start_id = params[:start_id].nil? ? DEFAULT_START_ID : params[:start_id].to_i
+    user_id = params[:user_id]
 
     @posts = Post.all.where(`start_id <= ?`, start_id)
     if params[:type] == "local"
       @posts = Post.local(current_user)
-    elsif params[:type] == 'user'
-      @posts = Posts.where(user_id: user_id)
+    elsif params[:type] == 'user' && !user_id.nil?
+      @posts = Post.where(user_id: user_id)
     end
 
     @posts = @posts.last(number * 2)
