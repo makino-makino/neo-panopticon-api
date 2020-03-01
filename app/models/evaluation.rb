@@ -2,9 +2,11 @@ class Evaluation < ApplicationRecord
   belongs_to :post
   belongs_to :user
 
+  validates :score, numericality: { only_integer: true, greater_than_or_equal_to: -1, less_than_or_equal_to: 1}
+
   def self.eval_post(post)
-    plus  = where('post_id = ? and is_positive = ?', post.id, true).count
-    minus = where('post_id = ? and is_positive = ?', post.id, false).count
+    plus  = where('post_id = ? and score = 1', post.id).count
+    minus = where('post_id = ? and score = -1', post.id).count
 
     if plus.zero? or minus.zero?
       plus += 1
@@ -16,12 +18,12 @@ class Evaluation < ApplicationRecord
 
   def self.eval_user(user)
     plus = includes(:post).where(
-        is_positive: true,
+        score: 1,
         posts: { user_id: user.id }
     ).count()
 
     minus = includes(:post).where(
-        is_positive: false,
+        score: -1,
         posts: { user_id: user.id }
     ).count()
 
