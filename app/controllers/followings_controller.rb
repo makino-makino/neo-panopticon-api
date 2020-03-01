@@ -5,7 +5,17 @@ class FollowingsController < ApplicationController
   # GET /followings
   # GET /followings.json
   def index
+    params.permit(:to_id, :from_id)
     @followings = Following.all
+
+    if not params[:from_id].nil?
+      @followings = @followings.where(from: from_id)
+    end
+    
+    if not params[:from_id].nil?
+      @followings = @followings.where(to: to_id)
+    end
+    
   end
 
   # POST /followings
