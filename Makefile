@@ -1,8 +1,9 @@
 PROGRAM=docker-compose
 CONTAINER=api
+PID_FILE=./tmp/pids/server.pid
 
 up:
-	rm ./tmp/pids/server.pid \
+	sudo rm $(PID_FILE) \
 	; $(PROGRAM) up 
 
 build:
