@@ -22,6 +22,11 @@ module Auth
 			# params.permit(:name, :email, :phone, :icon, :bio)
 			params.permit(:name, :email, :icon, :bio)
 		end
+
+		def update
+			params[:email] = nil
+			super
+		end
 	end
 end
 
