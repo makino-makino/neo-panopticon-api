@@ -7,7 +7,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable, :confirmable# , :trackable
   include DeviseTokenAuth::Concerns::User
   validates :name, uniqueness: true
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, format: { with: /\A[^@\s]+@keio\.jp\z/ }
+  # validates :email, uniqueness: true
+
   # validates :phone, uniqueness: true
 
   def followees
