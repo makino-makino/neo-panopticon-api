@@ -1,8 +1,8 @@
-version: '3'
+version: "3"
 services:
   api:
     build: .
-    command: sh run.sh 
+    command: sh run.sh
     volumes:
       - .:/api
     ports:
@@ -11,6 +11,8 @@ services:
       - db
     environment:
       - MYSQL_ROOT_PASSWORD=PASSWORD
+    env_file:
+      - .env
   db:
     image: "mysql:5"
     volumes:
