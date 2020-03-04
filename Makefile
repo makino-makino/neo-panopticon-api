@@ -22,5 +22,14 @@ console:
 	$(PROGRAM) run $(CONTAINER) \
 		bash -c 'rails console'
 
+migrate:
+	$(PROGRAM) run $(CONTAINER) \
+		bash -c 'rails db:migrate'
+
+reset:
+	$(PROGRAM) run $(CONTAINER) \
+		bash -c 'rails db:reset'
+
 bash:
 	$(PROGRAM) run $(CONTAINER) bash
+
