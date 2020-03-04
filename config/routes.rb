@@ -13,9 +13,10 @@ Rails.application.routes.draw do
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   mount_devise_token_auth_for 'User', at: 'auth', controllers: {
-    registrations: 'auth/registrations'
+    registrations: 'auth/registrations',
+  confirmations: 'auth/confirmations'
   }
-
-  put 'followings/:id', to: 'followings#update'
+  
+  # put 'auth/confirmation', to: 'auth/confirmation#show'
 
 end
