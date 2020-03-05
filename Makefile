@@ -5,7 +5,7 @@ ENV_TOOL=./tools/env.ipy
 
 
 up:
-	$(COMPOSER) up --build 
+	$(COMPOSER) up
 
 build:
 	$(COMPOSER) build
