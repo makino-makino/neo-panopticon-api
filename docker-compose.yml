@@ -2,12 +2,20 @@ version: "3"
 services:
   web:
     build: .
-    command: sh run.sh
+    command: sh ./entry_points/local.sh
     volumes:
       - .:/api
+      - ./tmp/db:/var/lib/postgresql/data
     ports:
       - "3000:3000"
     environment:
-      - MYSQL_ROOT_PASSWORD=PASSWORD
+      - PORT=3000
     env_file:
-      - .env
+      - ./environments/local.env
+    links:
+      - db
+  db:
+    image: postgres
+    env_file:
+      - ./environments/local.env
+
