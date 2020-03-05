@@ -13,7 +13,4 @@ ADD . /api/
 RUN bundle update && \
     bundle install --clean
 
-RUN apt-get install -y vim mysql-client
-
-#COPY run.sh /api/
-CMD ["sh", "/api/run.sh"]
+CMD ["sh", "/api/entry_points/heroku.sh"]
