@@ -10,6 +10,6 @@ ADD ./Gemfile /api/Gemfile
 #ADD ./Gemfile.lock /api/Gemfile.lock
 
 RUN bundle update && \
-    bundle install
+    bundle install --clean
 
 RUN apt-get install -y vim mysql-client
