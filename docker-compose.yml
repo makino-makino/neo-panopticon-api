@@ -9,7 +9,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - MYSQL_ROOT_PASSWORD=PASSWORD
       - PORT=3000
     env_file:
       - .env
@@ -17,7 +16,6 @@ services:
       - db
   db:
     image: postgres
-    environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=PASSWORD
+    env_file:
+      - .env
 

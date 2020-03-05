@@ -40,6 +40,7 @@ release:
 	&& $(RELEASER) login \
 	&& $(RELEASER) container:login \
 	&& $(RELEASER) container:push $(CONTAINER) \
+	&& $(RELEASER) addons:create heroku-postgresql:hobby-dev \
 	&& $(RELEASER) container:release $(CONTAINER) \
 	&& chmod +x $(ENV_TOOL) \
 	&& $(ENV_TOOL) \
