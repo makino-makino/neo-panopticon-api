@@ -1,36 +1,46 @@
-PROGRAM=docker-compose
-CONTAINER=api
-PID_FILE=./tmp/pids/server.pid
+COMPOSER=docker-compose
+RELEASER=heroku
+CONTAINER=web
+ENV_TOOL=./tools/env.ipy
+
 
 up:
-	sudo rm $(PID_FILE) \
-	; $(PROGRAM) up --build 
+	$(COMPOSER) up --build 
 
 build:
-	$(PROGRAM) build
+	$(COMPOSER) build
 
 down:
-	$(PROGRAM) down
+	$(COMPOSER) down
 
 logs:
-	$(PROGRAM) logs
+	$(COMPOSER) logs
 
 mysql:
-	$(PROGRAM) run $(CONTAINER) \
+	$(COMPOSER) run $(CONTAINER) \
 		bash -c 'rails db'
 
 console:
-	$(PROGRAM) run $(CONTAINER) \
+	$(COMPOSER) run $(CONTAINER) \
 		bash -c 'rails console'
 
 migrate:
-	$(PROGRAM) run $(CONTAINER) \
+	$(COMPOSER) run $(CONTAINER) \
 		bash -c 'rails db:migrate'
 
 reset:
-	$(PROGRAM) run $(CONTAINER) \
+	$(COMPOSER) run $(CONTAINER) \
 		bash -c 'rails db:reset'
 
 bash:
-	$(PROGRAM) run $(CONTAINER) bash
+	$(COMPOSER) run $(CONTAINER) bash
 
+release:
+	$(COMPOSER) down \
+	&& $(RELEASER) login \
+	&& $(RELEASER) container:login \
+	&& $(RELEASER) container:push $(CONTAINER) \
+	&& $(RELEASER) container:release $(CONTAINER) \
+	&& chmod +x $(ENV_TOOL) \
+	&& $(ENV_TOOL) \
+	&& $(RELEASER) logs --tail
