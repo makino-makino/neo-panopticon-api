@@ -5,11 +5,15 @@ RUN apt-get update -qq && \
 
 RUN mkdir /api
 WORKDIR /api
+ADD . /api/
 
-ADD ./Gemfile /api/Gemfile
+#ADD ./Gemfile /api/Gemfile
 #ADD ./Gemfile.lock /api/Gemfile.lock
 
 RUN bundle update && \
-    bundle install
+    bundle install --clean
 
 RUN apt-get install -y vim mysql-client
+
+#COPY run.sh /api/
+CMD ["sh", "/api/run.sh"]
