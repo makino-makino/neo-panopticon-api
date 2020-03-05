@@ -13,7 +13,7 @@ ADD . /api/
 RUN bundle update && \
     bundle install --clean
 
-RUN apt-get install -y vim mysql-client
+RUN apt-get install -y vim
 
 #COPY run.sh /api/
 CMD ["sh", "/api/run.sh"]
