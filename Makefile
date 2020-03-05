@@ -4,7 +4,7 @@ PID_FILE=./tmp/pids/server.pid
 
 up:
 	sudo rm $(PID_FILE) \
-	; $(PROGRAM) up 
+	; $(PROGRAM) up --build 
 
 build:
 	$(PROGRAM) build
