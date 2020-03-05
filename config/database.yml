@@ -10,10 +10,13 @@
 #   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
 #
 default: &default
-  adapter: sqlite3
+  adapter: postgresql
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: db
+  username: admin
+  password: PASSWORD
+  port: 5432
 
 development:
   <<: *default
