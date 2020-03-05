@@ -35,7 +35,7 @@ reset:
 bash:
 	$(COMPOSER) run $(CONTAINER) bash
 
-release:
+deploy:
 	$(COMPOSER) down \
 	&& $(RELEASER) login \
 	&& $(RELEASER) container:login \
