@@ -6,7 +6,7 @@ ruby '2.5.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
 # Use mysql as the database for Active Record
-gem 'mysql2', '>= 0.4.4', '< 0.6.0'
+# gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.12'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -31,9 +31,9 @@ gem 'devise'
 gem 'devise_token_auth'
 
 # sms api
-gem 'twilio-ruby', '~> 5.26.0'
+# gem 'twilio-ruby', '~> 5.26.0'
 # +81 ni kaetekureru yatsu
-gem 'phony_rails'
+# gem 'phony_rails'
 
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
@@ -54,3 +54,4 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'sqlite3', '~> 1.3.6'
