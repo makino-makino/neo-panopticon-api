@@ -5,7 +5,7 @@ ENV_TOOL=./tools/env.ipy
 
 
 up:
-	$(COMPOSER) up --build 
+	$(COMPOSER) up
 
 build:
 	$(COMPOSER) build
@@ -35,11 +35,12 @@ reset:
 bash:
 	$(COMPOSER) run $(CONTAINER) bash
 
-release:
+deploy:
 	$(COMPOSER) down \
 	&& $(RELEASER) login \
 	&& $(RELEASER) container:login \
 	&& $(RELEASER) container:push $(CONTAINER) \
+	&& $(RELEASER) addons:create heroku-postgresql:hobby-dev \
 	&& $(RELEASER) container:release $(CONTAINER) \
 	&& chmod +x $(ENV_TOOL) \
 	&& $(ENV_TOOL) \
