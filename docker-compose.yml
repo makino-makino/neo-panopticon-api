@@ -2,7 +2,7 @@ version: "3"
 services:
   web:
     build: .
-    command: sh run.sh
+    command: sh ./entry_points/local.sh
     volumes:
       - .:/api
       - ./tmp/db:/var/lib/postgresql/data
@@ -11,11 +11,11 @@ services:
     environment:
       - PORT=3000
     env_file:
-      - .env
+      - ./environments/local.env
     links:
       - db
   db:
     image: postgres
     env_file:
-      - .env
+      - ./environments/local.env
 
