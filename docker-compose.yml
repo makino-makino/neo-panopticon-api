@@ -5,9 +5,19 @@ services:
     command: sh run.sh
     volumes:
       - .:/api
+      - ./tmp/db:/var/lib/postgresql/data
     ports:
       - "3000:3000"
     environment:
       - MYSQL_ROOT_PASSWORD=PASSWORD
+      - PORT=3000
     env_file:
       - .env
+    links:
+      - db
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=PASSWORD
+
