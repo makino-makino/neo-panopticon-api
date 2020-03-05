@@ -68,3 +68,5 @@ yarn-debug.log*
 !/storage/.keep
 
 /data
+
+/api_*
