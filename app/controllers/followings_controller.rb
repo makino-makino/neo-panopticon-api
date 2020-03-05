@@ -8,11 +8,14 @@ class FollowingsController < ApplicationController
     params.permit(:to_id, :from_id)
     @followings = Following.all
 
-    if not params[:from_id].nil?
+    from_id = params[:from_id]
+    to_id = params[:to_id]
+
+    unless from_id.nil? then
       @followings = @followings.where(from: from_id)
     end
     
-    if not params[:from_id].nil?
+    unless to_id.nil? then
       @followings = @followings.where(to: to_id)
     end
     
