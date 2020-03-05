@@ -10,11 +10,9 @@
 #   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
 #
 default: &default
-  adapter: mysql2
+  adapter: sqlite3
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: <%= ENV.fetch("MYSQL_ROOT_PASSWORD") %>
   host: db
 
 development:
@@ -50,5 +48,3 @@ test:
 production:
   <<: *default
   database: api_production
-  username: api
-  password: <%= ENV['API_DATABASE_PASSWORD'] %>

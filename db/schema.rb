@@ -12,8 +12,8 @@
 
 ActiveRecord::Schema.define(version: 2020_02_29_022037) do
 
-  create_table "evaluations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "post_id"
+  create_table "evaluations", force: :cascade do |t|
+    t.integer "post_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -21,17 +21,17 @@ ActiveRecord::Schema.define(version: 2020_02_29_022037) do
     t.index ["post_id"], name: "index_evaluations_on_post_id"
   end
 
-  create_table "followings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "from_id", null: false
-    t.bigint "to_id", null: false
+  create_table "followings", force: :cascade do |t|
+    t.integer "from_id", null: false
+    t.integer "to_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["from_id"], name: "index_followings_on_from_id"
     t.index ["to_id"], name: "index_followings_on_to_id"
   end
 
-  create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "user_id"
+  create_table "posts", force: :cascade do |t|
+    t.integer "user_id"
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2020_02_29_022037) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -70,8 +70,4 @@ ActiveRecord::Schema.define(version: 2020_02_29_022037) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
-  add_foreign_key "evaluations", "posts"
-  add_foreign_key "followings", "users", column: "from_id"
-  add_foreign_key "followings", "users", column: "to_id"
-  add_foreign_key "posts", "users"
 end
